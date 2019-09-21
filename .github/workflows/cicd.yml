@@ -52,7 +52,8 @@ jobs:
           retag() {
             curl -sSL https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64 > $HOME/buildx &&\
             chmod a+x $HOME/buildx &&\
-            $HOME/buildx imagetools create --tag "${{ github.repository }}:$1" "${{ github.repository }}:${{ github.sha }}"
+            $HOME/buildx imagetools create --tag "${{ github.repository }}:$1" "${{ github.repository }}:${{ github.sha }}" && \
+            exit 0
           }
           test ${{ github.ref }} = "refs/heads/master" && retag latest || \
           test ${{ github.ref }} = "refs/heads/develop" && retag next || \

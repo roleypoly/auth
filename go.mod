@@ -5,7 +5,7 @@ go 1.12
 require (
 	github.com/bwmarrin/discordgo v0.20.1
 	github.com/gorilla/websocket v1.4.1 // indirect
-	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0
+	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
 	github.com/improbable-eng/grpc-web v0.11.0
 	github.com/joho/godotenv v1.3.0
 	github.com/roleypoly/gripkit v0.0.0-20190819014327-7141453fff6a

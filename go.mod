@@ -6,7 +6,7 @@ require (
 	github.com/bwmarrin/discordgo v0.21.1
 	github.com/gorilla/websocket v1.4.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
-	github.com/improbable-eng/grpc-web v0.11.0
+	github.com/improbable-eng/grpc-web v0.12.0
 	github.com/joho/godotenv v1.3.0
 	github.com/roleypoly/gripkit v0.0.0-20190819014327-7141453fff6a
 	github.com/roleypoly/rpc v0.0.0-20190921034711-ecdc7744d4c7

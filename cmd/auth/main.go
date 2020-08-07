@@ -2,7 +2,6 @@ package main // import "github.com/roleypoly/auth"
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -13,8 +12,10 @@ import (
 	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/roleypoly/common/version"
 	"github.com/roleypoly/gripkit"
 	"google.golang.org/grpc"
+	"k8s.io/klog"
 
 	pbBackend "github.com/roleypoly/rpc/auth/backend"
 	pbClient "github.com/roleypoly/rpc/auth/client"
@@ -36,9 +37,11 @@ func parseRoot(s string) []string {
 }
 
 func main() {
-	go startGripkit()
+	klog.InitFlags(nil)
+	klog.V(1).Info("Verbose on")
+	klog.Info(version.StartupInfo())
 
-	fmt.Println("roleypoly-auth: started grpc on", svcPort)
+	go startGripkit()
 
 	syscallExit := make(chan os.Signal, 1)
 	signal.Notify(

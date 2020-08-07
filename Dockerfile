@@ -37,7 +37,7 @@ COPY ./ ./
 # Build the executable to `/app`. Mark the build as statically linked.
 RUN CGO_ENABLED=0 go build \
   -installsuffix 'static' \
-  -ldflags "-X github.com/roleypoly/discord/internal/version.GitCommit=${GIT_COMMIT} -X github.com/roleypoly/auth/internal/version.GitBranch=${GIT_BRANCH} -X github.com/roleypoly/auth/internal/version.BuildDate=${BUILD_DATE}" \
+  -ldflags "-X github.com/roleypoly/common/version.GitCommit=${GIT_COMMIT} -X github.com/roleypoly/common/version.GitBranch=${GIT_BRANCH} -X github.com/roleypoly/common/version.BuildDate=${BUILD_DATE}" \
   -o /app ./cmd/auth
 
 # Final stage: the running container.

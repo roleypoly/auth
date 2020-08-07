@@ -1,0 +1,34 @@
+schemaVersion: '2.0.0'
+
+globalEnvVars:
+- key: AUTH_SVC_PORT
+  value: 127.0.0.1:6888
+- key: AUTH_PUB_PORT
+  value: 127.0.0.1:6889
+
+commandTests:
+- name: 'app test'
+  command: '/app'
+  expectedError: ['.*Starting.*', '.*Build [0-9a-f]+.*'] # /app outputs it's logs to stderr
+  exitCode: 1
+
+fileContentTests:
+- name: 'passwd'
+  path: '/etc/passwd'
+  expectedContents: ['.*nobody.*']
+- name: 'group'
+  path: '/etc/group'
+  expectedContents: ['.*nobody.*']
+
+fileExistenceTests:
+- name: 'app existence'
+  path: '/app'
+  shouldExist: true
+  isExecutableBy: 'other'
+- name: 'ca-certs'
+  path: '/etc/ssl/certs/ca-certificates.crt'
+  shouldExist: true
+
+metadataTest:
+  entrypoint: ['/app']
+  exposedPorts: ['6888', '6889', '16888']

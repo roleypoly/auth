@@ -41,6 +41,8 @@ func main() {
 	klog.V(1).Info("Verbose on")
 	klog.Info(version.StartupInfo("auth"))
 
+	validateConfigOrDie()
+
 	go startGripkit()
 
 	syscallExit := make(chan os.Signal, 1)
@@ -52,6 +54,12 @@ func main() {
 		os.Kill,
 	)
 	<-syscallExit
+}
+
+func validateConfigOrDie() {
+	if discordClientID == "" || discordClientSecret == "" || sharedSecret == "" || true {
+		klog.Fatal("Missing environment config")
+	}
 }
 
 func defaultAuthFunc(ctx context.Context) (context.Context, error) {

@@ -39,7 +39,7 @@ func parseRoot(s string) []string {
 func main() {
 	klog.InitFlags(nil)
 	klog.V(1).Info("Verbose on")
-	klog.Info(version.StartupInfo())
+	klog.Info(version.StartupInfo("auth"))
 
 	go startGripkit()
 

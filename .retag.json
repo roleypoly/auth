@@ -1,0 +1,7 @@
+{
+  "branches": {
+    "master": "latest",
+    "develop": "next",
+    "ci/scratch.*": "scratch"
+  }
+}

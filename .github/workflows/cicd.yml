@@ -1,6 +1,6 @@
 name: CI Workflow
 
-on: [push, pull_request]
+on: push
 
 jobs:
   go_test:
@@ -12,7 +12,7 @@ jobs:
       - name: Get Go
         uses: actions/setup-go@v1
         with:
-          go-version: 1.13.x
+          go-version: 1.14.x
 
       - name: Go Get
         run: go get -v ./...
@@ -50,15 +50,24 @@ jobs:
           push: 'true'
 
       - name: Retag Image
-        if: github.event_name == 'push'
-        run: |
-          retag() {
-            curl -sSL https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64 > $HOME/buildx &&\
-            chmod a+x $HOME/buildx &&\
-            $HOME/buildx imagetools create --tag "${{ github.repository }}:$1" "${{ github.repository }}:${{ github.sha }}" && \
-            exit 0
-          }
-          test ${{ github.ref }} = "refs/heads/master" && retag latest || \
-          test ${{ github.ref }} = "refs/heads/develop" && retag next || \
-          test ${{ github.ref }} = "refs/heads/ci-testing" && retag scratch || \
-          echo "not a well-known branch, not retagging"
+      uses: roleypoly/actions/retag@master
+      with:
+        src: ${{ github.repository }}:${{ github.sha }}
+
+      - name: Deploy to Staging
+        uses: roleypoly/actions/deploy@master
+        if: github.ref == 'refs/heads/develop'
+        with:
+          environment: staging
+          new_tag: ${{ github.sha }}
+          app: discord
+          github_auth_token: ${{ secrets.GITOPS_TOKEN }}
+
+      - name: Deploy to Production
+        uses: roleypoly/actions/deploy@master
+        if: github.ref == 'refs/heads/master'
+        with:
+          environment: production
+          new_tag: ${{ github.sha }}
+          app: discord
+          github_auth_token: ${{ secrets.GITOPS_TOKEN }}

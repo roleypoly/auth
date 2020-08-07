@@ -1,9 +1,8 @@
 # Accept the Go version for the image to be set as a build argument.
 # Default to Go 1.12
-ARG GO_VERSION=1.13
 
 # First stage: build the executable.
-FROM --platform=$BUILDPLATFORM golang:${GO_VERSION}-alpine AS builder
+FROM --platform=$BUILDPLATFORM golang:1.14-alpine AS builder
 
 ARG GOPROXY
 ARG BUILDPLATFORM
@@ -38,7 +37,8 @@ COPY ./ ./
 # Build the executable to `/app`. Mark the build as statically linked.
 RUN CGO_ENABLED=0 go build \
   -installsuffix 'static' \
-  -o /app .
+  -ldflags "-X github.com/roleypoly/discord/internal/version.GitCommit=${GIT_COMMIT} -X github.com/roleypoly/auth/internal/version.GitBranch=${GIT_BRANCH} -X github.com/roleypoly/auth/internal/version.BuildDate=${BUILD_DATE}" \
+  -o /app ./cmd/auth
 
 # Final stage: the running container.
 FROM scratch AS final
@@ -55,7 +55,7 @@ COPY --from=builder /app /app
 # Declare the port on which the webserver will be exposed.
 # As we're going to run the executable as an unprivileged user, we can't bind
 # to ports below 1024.
-EXPOSE 8080
+EXPOSE 6888-6889 16888
 
 # Perform any further action as an unprivileged user.
 USER nobody:nobody

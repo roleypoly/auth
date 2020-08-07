@@ -50,9 +50,9 @@ jobs:
           push: 'true'
 
       - name: Retag Image
-      uses: roleypoly/actions/retag@master
-      with:
-        src: ${{ github.repository }}:${{ github.sha }}
+        uses: roleypoly/actions/retag@master
+        with:
+          src: ${{ github.repository }}:${{ github.sha }}
 
       - name: Deploy to Staging
         uses: roleypoly/actions/deploy@master

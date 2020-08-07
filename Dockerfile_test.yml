@@ -9,8 +9,8 @@ globalEnvVars:
 commandTests:
 - name: 'app test'
   command: '/app'
-  expectedError: ['.*Starting.*', '.*Build [0-9a-f]+.*'] # /app outputs it's logs to stderr
-  exitCode: 1
+  expectedError: ['.*Starting auth service.*', '.*Build.*'] # /app outputs it's logs to stderr
+  exitCode: 255
 
 fileContentTests:
 - name: 'passwd'

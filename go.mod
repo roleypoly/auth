@@ -11,6 +11,6 @@ require (
 	github.com/roleypoly/common v0.0.0-20200807221914-544fe56e7b13
 	github.com/roleypoly/gripkit v0.0.0-20190819014327-7141453fff6a
 	github.com/roleypoly/rpc v0.0.0-20190921034711-ecdc7744d4c7
-	google.golang.org/grpc v1.31.1
+	google.golang.org/grpc v1.32.0
 	k8s.io/klog v1.0.0
 )
